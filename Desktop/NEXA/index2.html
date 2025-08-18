@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXA - Automate Your Future</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      min-height: 100vh;
+    }
+
+    /* Navigation */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: 900;
+      color: rgb(179,153,156);
+      letter-spacing: 2px;
+    }
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    .nav-menu a {
+      text-decoration: none;
+      color: #212529;
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
+    }
+    .nav-menu a:hover {
+      color: #6c757d;
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      align-items: center;
+      min-height: calc(100vh - 80px);
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .hero-content {
+      flex: 1;
+      max-width: 500px;
+      z-index: 2;
+      padding-left: 5%;
+    }
+    .hero-title {
+      font-size: 5.5rem;
+      font-weight: 900;
+      color: #212529;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      letter-spacing: -1px;
+    }
+    .hero-description {
+      font-size: 1.1rem;
+      color: #495057;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      max-width: 450px;
+    }
+    .hero-visual {
+      flex: 1;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 500px;
+    }
+    .tech-background {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url('photos/back.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.3;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .robot-character {
+      position: relative;
+      z-index: 1;
+      width: clamp(320px, 48vw, 520px);
+      height: auto;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0px);}
+      50% { transform: translateY(-10px);}
+    }
+
+    /* About Section */
+  .section { padding: 5rem 1.5rem; }
+  .section { background-color: #ffffff; }
+  .section-team{
+    background-color: #eefcfd;
+    padding: 5rem 1.5rem; /* ensure consistent spacing */
+  }
+    /* Services Section */
+    .section-services {
+    background-color: #fef6f6; /* softer than pink for better readability */
+    padding: 5rem 1.5rem;
+    }
+
+    /* Center the Services section heading */
+    .section-services .section-title {
+      text-align: center;
+    }
+
+    /* Center titles for Gallery and Team sections */
+    #gallery .section-title,
+    #team .section-title {
+      text-align: center;
+    }
+
+    /* Constrain layout for Team and Gallery like About */
+    #team .section-content,
+    #gallery .section-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .section-services .feature-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .section-services .feature-icon {
+    background: linear-gradient(135deg, #f8d7da, #f1c0c3);
+    color: #d6336c;
+    }
+
+    .section-services .feature-title {
+    color: #212529;
+    }
+
+    .section-services .feature-desc {
+    color: #495057;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: center;
+    }
+
+    @media (max-width: 768px) {
+    .section-services {
+        padding: 3rem 1rem;
+    }
+    }
+
+    #about .section-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: #212529;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.75rem;
+    }
+    .section-text {
+      color: #495057;
+      font-size: 1.125rem;
+      line-height: 1.8;
+      max-width: 900px;
+      margin: 0.5rem auto 2rem;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 14px;
+      padding: 1.75rem 1.5rem;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+      position: relative;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.10);
+      background: rgba(255,255,255,0.98);
+    }
+    .feature-icon {
+      width: 56px; height: 56px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg,#dee2e6,#ced4da);
+      color: #212529;
+      font-size: 1.5rem;
+      margin: 0 auto 1rem;
+    }
+    .feature-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #212529;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .feature-desc {
+      color: #495057;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    /* Floating anim reuse */
+    .floating { animation: float 6s ease-in-out infinite; }
+
+    /* ===== Logos Carousel ===== */
+    .logos-wrapper {
+      overflow: hidden;
+      margin-top: 4rem;
+      padding: 1.5rem 0;
+      background: rgba(255,255,255,0.8);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .logos-container {
+      display: flex;
+      width: 200%;
+      gap: 4rem;
+      animation: scroll 20s linear infinite;
+    }
+    .logos-container img {
+      height: 40px;
+      object-fit: contain;
+      filter: grayscale(100%);
+      opacity: 0.8;
+      transition: all 0.3s ease;
+    }
+    .logos-container img:hover {
+      filter: grayscale(0);
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @media (max-width:768px) {
+      .section { padding: 3.5rem 1rem;}
+    }
+   .slider-container {
+        width: 100%;
+        max-width: 1100px;
+        margin: 2rem auto;
+        overflow: hidden;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+  .slider {
+  display: flex;
+  gap: 2rem; /* spacing between images */
+  padding: 1rem; /* spacing like cards */
+  width: max-content; /* allow content-driven width */
+  animation: slideLoop 30s linear infinite; /* smooth continuous loop */
+  will-change: transform;
+  }
+
+        .slider img {
+        flex: 0 0 300px;   /* set fixed card-like width */
+        height: 200px;     /* set card-like height */
+        object-fit: cover; /* crop nicely */
+        border-radius: 14px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+        }
+    @keyframes slideLoop {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); } /* move by half (second half is duplicate) */
+    }
+
+    /* ===== Team Section ===== */
+    .team-grid {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+      overflow: visible;
+      align-items: center;
+    }
+
+    .team-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      max-width: 540px; /* larger card */
+      width: 100%;
+      text-align: center;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    .team-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    }
+    .team-image img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border: 4px solid #f8f9fa;
+    }
+    .team-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      width: 50px;
+    }
+    .team-role {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #a4deff;
+      margin-bottom: 1rem;
+    }
+    .team-bio {
+      font-size: 0.95rem;
+      color: #495057;
+      line-height: 1.6;
+    }
+    /* Wrapper for card + outside-holding robot */
+    .team-item { position: relative; display: inline-block; padding-right: 6rem; }
+    .team-robot-hold {
+      position: absolute;
+      right: -60px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: clamp(140px, 22vw, 240px);
+      height: auto;
+      pointer-events: none;
+      user-select: none;
+    }
+    .team-grid { overflow: visible; align-items: center; }
+
+    @media (max-width: 768px) {
+      .team-item { padding-right: 0; }
+      .team-robot-hold { display: none; }
+    }
+
+    /* Decorative peek image on the right of team card */
+    .team-robot-peek {
+      position: absolute;
+      right: -10px;
+      bottom: -10px;
+      width: clamp(120px, 22vw, 220px);
+      height: auto;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @media (max-width: 768px) {
+      .team-card { padding-right: 2rem; }
+      .team-robot-peek { display: none; }
+    }
+    .footer {
+      position: relative;
+      background: rgba(17, 17, 17, 0.9);
+      padding: 2rem 1rem; /* reduced height */
+      text-align: center;
+      z-index: 30;
+    }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ffffffe0;
+      margin-bottom: 1rem; /* tighter */
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-icon {
+      height: 100px; /* scale down logo image */
+      width: auto;
+      display: inline-block;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;          /* tighter */
+      margin-bottom: 1rem; /* less space */
+    }
+
+        .footer-link {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #cbb8e4;
+        }
+
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .social-icon {
+      color: #d1d5db;
+      font-size: 1.25rem; /* smaller icons */
+      transition: all 0.3s ease;
+    }
+
+        .social-icon:hover {
+            color: #cbb8e4;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            color: #7a7a7a;
+            font-size: 0.9rem;
+        }
+
+    /* Footer decorative robot on the right */
+    .footer-robot {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: clamp(140px, 18vw, 260px);
+      height: auto;
+      pointer-events: none; /* don’t block footer links */
+      user-select: none;
+    }
+
+    @media (max-width: 768px) {
+      .footer-robot { display: none; }
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="logo">NEXA</div>
+    <ul class="nav-menu">
+      <li><a href="#home">HOME</a></li>
+      <li><a href="#about">ABOUT</a></li>
+      <li><a href="#services">SERVICES</a></li>
+      <li><a href="#contact">CONTACT</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="tech-background"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">AUTOMATE<br>YOUR FUTURE</h1>
+      <p class="hero-description">
+        Transform your business with intelligent automation solutions that adapt, learn, and evolve with your needs.
+      </p>
+    </div>
+    <div class="hero-visual">
+      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/cute-removebg-preview-gudx4rPNuDpa2tOJ61ZFP2pMXKalvD.png" alt="Friendly AI Robot" class="robot-character">
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="section" id="about">
+    <div class="section-content">
+      <h2 class="section-title">About NEXA</h2>
+      <p class="section-text">
+        Founded in 2020, NEXA is at the forefront of AI-driven innovation. We believe in the power of technology to solve complex problems and create meaningful change. Our team of experts combines deep technical knowledge with creative thinking to deliver cutting-edge solutions.
+      </p>
+      <div class="features-grid">
+        <div class="feature-card floating" style="animation-delay:0.1s;">
+          <div class="feature-icon"><i class="fas fa-brain"></i></div>
+          <h3 class="feature-title">Advanced AI</h3>
+          <p class="feature-desc">We develop sophisticated AI models that learn and adapt to your specific business needs, delivering insights and automation.</p>
+        </div>
+        <div class="feature-card floating" style="animation-delay:0.3s;">
+          <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+          <h3 class="feature-title">Data Analytics</h3>
+          <p class="feature-desc">Transform raw data into actionable intelligence with our powerful analytics platforms and visualization tools.</p>
+        </div>
+        <div class="feature-card floating" style="animation-delay:0.5s;">
+          <div class="feature-icon"><i class="fas fa-robot"></i></div>
+          <h3 class="feature-title">Automation</h3>
+          <p class="feature-desc">Streamline operations and reduce costs with our intelligent automation solutions tailored to your workflow.</p>
+        </div>
+      </div>
+
+      <!-- Logos Carousel -->
+      <div class="logos-wrapper">
+        <div class="logos-container">
+          <!-- logos duplicated for smooth loop -->
+          <img src="/icon/Chroma-tutorial.png" alt="Basic Dept">
+          <img src="/icon/images.jpeg" alt="Braintree">
+          <img src="/icon/images.png" alt="Coinbase">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+          
+          <!-- repeat -->
+          <img src="/icon/Chroma-tutorial.png" alt="Basic Dept">
+          <img src="/icon/images.jpeg" alt="Braintree">
+          <img src="/icon/images.png" alt="Coinbase">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+
+                    <!-- repeat -->
+          <img src="/icon/Chroma-tutorial.png" alt="Basic Dept">
+          <img src="/icon/images.jpeg" alt="Braintree">
+          <img src="/icon/images.png" alt="Coinbase">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+
+                    <!-- repeat -->
+          <img src="/icon/Chroma-tutorial.png" alt="Basic Dept">
+          <img src="/icon/images.jpeg" alt="Braintree">
+          <img src="/icon/images.png" alt="Coinbase">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+        </div>
+      </div>
+    </div>
+  </section>
+    <!-- Services Section -->
+  <section class="section section-services" id="services">
+  <div class="section-content">
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-text">
+      At NEXA, we provide end-to-end automation solutions that empower your business to thrive in a digital-first world.
+    </p>
+
+    <div class="features-grid">
+      <div class="feature-card floating" style="animation-delay:0.2s;">
+        <div class="feature-icon"><i class="fas fa-cogs"></i></div>
+        <h3 class="feature-title">Process Automation</h3>
+        <p class="feature-desc">Automate repetitive tasks, optimize workflows, and free your team to focus on what matters most.</p>
+      </div>
+      <div class="feature-card floating" style="animation-delay:0.4s;">
+        <div class="feature-icon"><i class="fas fa-cloud"></i></div>
+        <h3 class="feature-title">Cloud Integration</h3>
+        <p class="feature-desc">Seamlessly integrate your systems with powerful cloud-based automation tools for scalability and flexibility.</p>
+      </div>
+      <div class="feature-card floating" style="animation-delay:0.6s;">
+        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3 class="feature-title">Security & Compliance</h3>
+        <p class="feature-desc">Ensure your automated processes meet industry standards while keeping your data secure.</p>
+      </div>
+      <div class="feature-card floating" style="animation-delay:0.8s;">
+        <div class="feature-icon"><i class="fas fa-users"></i></div>
+        <h3 class="feature-title">Consulting & Support</h3>
+        <p class="feature-desc">Our experts work with you from strategy to implementation, offering 24/7 support along the way.</p>
+      </div>
+    </div>
+  </div>
+</section>
+  <!-- Image Slider Section -->
+  <section class="section" id="gallery">
+    <div class="section-content">
+      <h2 class="section-title">Innovation in Action</h2>
+      <p class="section-text">
+        Explore how our automation and AI solutions transform industries worldwide.
+      </p>
+
+      <div class="slider-container">
+        <div class="slider">
+          <!-- original set -->
+          <img src="photos/background.png" alt="AI Tech">
+          <img src="photos/background2.avif" alt="Automation">
+          <img src="photos/background8.png" alt="Data Cloud">
+          <!-- duplicate set for seamless loop -->
+          <img src="photos/background.png" alt="AI Tech duplicate" aria-hidden="true">
+          <img src="photos/background2.avif" alt="Automation duplicate" aria-hidden="true">
+          <img src="photos/background8.png" alt="Data Cloud duplicate" aria-hidden="true">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meet the Team Section -->
+  <section class="section-team" id="team">
+    <div class="section-content">
+      <h2 class="section-title">Meet the Team</h2>
+      <p class="section-text">
+        At NEXA, leadership drives vision. Meet the mind shaping the future of automation.
+      </p>
+
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-item">
+            <div class="team-card">
+              <div class="team-image">
+                <img src="photos/kawthar.jpeg" alt="CEO">
+              </div>
+              <h3 class="team-name">Kawthar shaalan</h3>
+              <p class="team-role">Founder & CEO</p>
+              <p class="team-bio">
+              </p>
+            </div>
+            <img src="photos/23baf17c9bfe1087ff1b5dcfa21c6877-removebg-preview.png" alt="" aria-hidden="true" class="team-robot-hold">
+    </div>
+  </section>
+          <footer class="footer">
+            <div class="footer-content">
+                <a href="#home" class="footer-logo">
+                    <img src="photos/logo.png" alt="NEXA Logo" class="logo-icon">
+
+                </a>
+                <div class="footer-links">
+                    <a href="#about" class="footer-link">About</a>
+                    <a href="#services" class="footer-link">Services</a>
+                    <a href="#team" class="footer-link">Team</a>
+                    <a href="#contact" class="footer-link">Contact</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+                <p class="copyright">© 2023 NEXA Technologies. All rights reserved.</p>
+            </div>
+
+  <script>
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+      anchor.addEventListener('click',function(e){
+        e.preventDefault();
+        const target=document.querySelector(this.getAttribute('href'));
+        if(target){
+          target.scrollIntoView({behavior:'smooth'});
+        }
+      });
+    });
+    // Navbar scroll effect
+    window.addEventListener('scroll',function(){
+      const navbar=document.querySelector('.navbar');
+      if(window.scrollY>50){
+        navbar.style.background='rgba(255,255,255,0.98)';
+        navbar.style.boxShadow='0 2px 20px rgba(0,0,0,0.1)';
+      }else{
+        navbar.style.background='rgba(255,255,255,0.95)';
+        navbar.style.boxShadow='none';
+      }
+    });
+  </script>
+</body>
+</html>

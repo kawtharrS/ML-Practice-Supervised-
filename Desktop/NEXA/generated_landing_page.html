@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXA | Intelligence Refined</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #666666;
+            --tertiary: #999999;
+            --surface: #ffffff;
+            --accent: #f5f5f5;
+            --border: #e5e5e5;
+            --shadow: rgba(0, 0, 0, 0.04);
+            --shadow-hover: rgba(0, 0, 0, 0.08);
+            
+            /* Gradient Variables */
+            --gradient-primary: linear-gradient(180deg, 
+                #f1f5f9 0%, 
+                #e2e8f0 15%, 
+                #cbd5e1 30%, 
+                #94a3b8 45%, 
+                #64748b 60%, 
+                #475569 75%, 
+                #334155 85%, 
+                #1e293b 95%, 
+                #0f172a 100%);
+            --gradient-primary-inverse: linear-gradient(180deg, 
+                #0f172a 0%, 
+                #1e293b 15%, 
+                #334155 30%, 
+                #475569 45%, 
+                #64748b 60%, 
+                #94a3b8 75%, 
+                #cbd5e1 85%, 
+                #e2e8f0 95%, 
+                #f1f5f9 100%);
+            --gradient-primary-middle: linear-gradient(180deg, 
+                #f8fafc 0%,     /* Very light start */
+                #f1f5f9 10%,    /* Light */
+                #e2e8f0 20%,    /* Light gray */
+                #cbd5e1 30%,    /* Medium-light */
+                #cbd5e1 70%,    /* Medium-light (mirror) */
+                #e2e8f0 80%,    /* Light gray (mirror) */
+                #f1f5f9 90%,    /* Light (mirror) */
+                #f8fafc 95%),
+                #ffffff 100%;  /* Very light end */
+
+            
+            --gradient-secondary: linear-gradient(135deg, 
+                #667eea 0%, 
+                #764ba2 25%, 
+                #f093fb 50%, 
+                #f5576c 75%, 
+                #4facfe 100%);
+                
+            --gradient-accent: linear-gradient(45deg, 
+                #ff9a9e 0%, 
+                #fecfef 25%, 
+                #fecfef 50%, 
+                #ffc3a0 75%, 
+                #ff9a9e 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--primary);
+            background: var(--surface);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .contact-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--gradient-secondary);
+            color: var(--surface);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 25px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Hero Section with Gradient */
+        .hero {
+            min-height: 100vh;
+            background: var(--gradient-primary-middle);
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-container {
+            max-width: 1500px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 300;
+            line-height: 0.9;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            letter-spacing: -0.04em;
+        }
+
+        .hero-title .emphasis {
+            font-weight: 600;
+            font-style: italic;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--secondary);
+            max-width: 500px;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--surface);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            background: var(--primary);
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .hero-cta::after {
+            content: '→';
+            transition: transform 0.2s ease;
+        }
+
+        .hero-cta:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-device {
+            width: 300px;
+            height: 600px;
+            background: var(--gradient-accent);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-device::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .hero-device::after {
+            content: '⚡';
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-dot {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(102, 126, 234, 0.4);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        .floating-dot:nth-child(odd) {
+            animation-duration: 25s;
+            background: rgba(245, 87, 108, 0.4);
+        }
+
+        .floating-dot:nth-child(even) {
+            animation-duration: 18s;
+            background: rgba(79, 172, 254, 0.4);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Section Base */
+        .section {
+            padding: 8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .about-section {
+            padding: 8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .section-header {
+            margin-bottom: 4rem;
+            max-width: 600px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .section-subtitle {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        /* Services Grid with Gradient Cards */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .service-card {
+            padding: 2.5rem 2rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-secondary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            border-color: transparent;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .service-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--tertiary);
+            margin-bottom: 1rem;
+        }
+
+        .service-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .service-description {
+            color: var(--secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Stats Section with Gradient Background */
+        .stats-section {
+            background: var(--gradient-accent);
+            padding: 6rem 2rem;
+            margin: 8rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-item {
+            padding: 2rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .team-card {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: var(--surface);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-secondary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .team-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+            border: 3px solid transparent;
+            background: var(--gradient-secondary);
+            padding: 3px;
+        }
+
+        .team-card:hover .team-image {
+            filter: grayscale(0%);
+        }
+
+        .team-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .team-role {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: start;
+        }
+
+        .contact-info h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .contact-info p {
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .contact-form {
+            background: var(--gradient-accent);
+            padding: 3rem 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-secondary);
+            color: var(--surface);
+            border: none;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary);
+            color: var(--surface);
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            color: var(--tertiary);
+            font-size: 0.9rem;
+            max-width: 400px;
+            margin: 0 auto 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--tertiary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--surface);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 1.5rem;
+            color: var(--tertiary);
+            font-size: 0.85rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .section {
+                padding: 4rem 1rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .hero-device {
+                width: 250px;
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+      
+    <header class="header">
+        <div class="nav-container">
+            <a href="#home" class="logo">NEXA</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#team">Team</a></li>
+                </ul>
+            </nav>
+            <a href="#contact" class="contact-btn">Contact</a>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="floating-elements">
+            <div class="floating-dot" style="left: 20%; animation-delay: 0s;"></div>
+            <div class="floating-dot" style="left: 40%; animation-delay: 2s;"></div>
+            <div class="floating-dot" style="left: 60%; animation-delay: 4s;"></div>
+            <div class="floating-dot" style="left: 80%; animation-delay: 6s;"></div>
+            <div class="floating-dot" style="left: 30%; animation-delay: 8s;"></div>
+            <div class="floating-dot" style="left: 70%; animation-delay: 10s;"></div>
+        </div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Intelligence<br>
+                    <span class="emphasis">Refined</span>
+                </h1>
+                <p class="hero-subtitle">
+                    We craft intelligent solutions with precision and purpose. No complexity for complexity's sake—just clarity in action.
+                </p>
+                <a href="#services" class="hero-cta">
+                    Explore our work
+                </a>
+            </div>
+            
+        </div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="section-header">
+            <h2 class="section-title">Our Approach</h2>
+            <p class="section-subtitle">
+                We believe intelligence should be invisible. The best technology works quietly in the background, 
+                making complex things simple and impossible things possible.
+            </p>
+        </div>
+    </section>
+
+     Stats Section 
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-item">
+                <span class="stat-number">15+</span>
+                <p class="stat-label">Projects Delivered</p>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">98%</span>
+                <p class="stat-label">Client Satisfaction</p>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">5</span>
+                <p class="stat-label">Years Experience</p>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <p class="stat-label">Support Available</p>
+            </div>
+        </div>
+    </section>
+
+     Services Section 
+    <section class="section" id="services">
+        <div class="section-header">
+            <h2 class="section-title">What We Do</h2>
+            <p class="section-subtitle">
+                Every solution is built with intention. We focus on what matters most—results that move your business forward.
+            </p>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-number">01</div>
+                <h3 class="service-title">AI Strategy</h3>
+                <p class="service-description">
+                    We help you identify where AI can create real value, not just where it can be applied.
+                </p>
+            </div>
+            <div class="service-card">
+                <div class="service-number">02</div>
+                <h3 class="service-title">Custom Development</h3>
+                <p class="service-description">
+                    Bespoke solutions designed to fit your specific needs, not generic templates.
+                </p>
+            </div>
+            <div class="service-card">
+                <div class="service-number">03</div>
+                <h3 class="service-title">Data Intelligence</h3>
+                <p class="service-description">
+                    Transform your data into clear insights that drive informed decisions.
+                </p>
+            </div>
+            <div class="service-card">
+                <div class="service-number">04</div>
+                <h3 class="service-title">Process Optimization</h3>
+                <p class="service-description">
+                    Streamline operations with intelligent automation that works seamlessly.
+                </p>
+            </div>
+            <div class="service-card">
+                <div class="service-number">05</div>
+                <h3 class="service-title">Security & Compliance</h3>
+                <p class="service-description">
+                    Protect your systems with AI-powered security that adapts to new threats.
+                </p>
+            </div>
+            <div class="service-card">
+                <div class="service-number">06</div>
+                <h3 class="service-title">Training & Support</h3>
+                <p class="service-description">
+                    Empower your team with the knowledge and tools they need to succeed.
+                </p>
+            </div>
+        </div>
+    </section>
+
+     Team Section 
+    <section class="section" id="team">
+        <div class="section-header">
+            <h2 class="section-title">The Team</h2>
+            <p class="section-subtitle">
+                A focused team of specialists who believe in doing fewer things better.
+            </p>
+        </div>
+        
+        <div class="team-grid">
+            <div class="team-card">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-u7E3884uBiQ5guCRpZN4tqP4ShYLdy.png" alt="Kawthar Shaalan" class="team-image">
+                <h3 class="team-name">Kawthar Shaalan</h3>
+                <p class="team-role">Founder & CEO</p>
+            </div>
+        </div>
+    </section>
+
+     Contact Section 
+    <section class="section" id="contact">
+        <div class="section-header">
+            <h2 class="section-title">Let's Talk</h2>
+            <p class="section-subtitle">
+                Ready to explore how intelligent technology can transform your business?
+            </p>
+        </div>
+        
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p>We're always interested in discussing new projects and opportunities. Reach out and let's start a conversation.</p>
+                
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <span>hello@nexa.ai</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📞</span>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <span>San Francisco, CA</span>
+                    </div>
+                </div>
+            </div>
+            
+            <form class="contact-form">
+                <div class="form-group">
+                    <label class="form-label" for="name">Name</label>
+                    <input type="text" id="name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="company">Company</label>
+                    <input type="text" id="company" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="message">Message</label>
+                    <textarea id="message" class="form-input form-textarea" required></textarea>
+                </div>
+                <button type="submit" class="form-submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+     Footer 
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">NEXA</div>
+            <p class="footer-text">
+                Intelligence refined. Solutions delivered.
+            </p>
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#team">Team</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 NEXA Technologies. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission handling
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Add form submission logic here
+            alert('Thank you for your message. We\'ll get back to you soon!');
+        });
+
+        // Add more floating dots dynamically
+        const floatingElements = document.querySelector('.floating-elements');
+        for (let i = 0; i < 15; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'floating-dot';
+            dot.style.left = Math.random() * 100 + '%';
+            dot.style.animationDelay = Math.random() * 20 + 's';
+            dot.style.animationDuration = (15 + Math.random() * 15) + 's';
+            floatingElements.appendChild(dot);
+        }
+
+        // Parallax effect for hero elements
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const heroDevice = document.querySelector('.hero-device');
+            if (heroDevice) {
+                heroDevice.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+    </script>
+</body>
+</html>

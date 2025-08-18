@@ -1,0 +1,285 @@
+/* Gradient Text Effects */
+.gradient-text {
+  background: linear-gradient(135deg, #3b82f6, #14b8a6, #8b5cf6);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease infinite;
+}
+
+.gradient-text-white {
+  background: linear-gradient(135deg, #ffffff, #e5e7eb, #ffffff);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* 3D Cube Animation */
+.cube-container {
+  perspective: 1000px;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+}
+
+.cube {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  transform-style: preserve-3d;
+  animation: rotate-cube 10s infinite linear;
+}
+
+.face {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #3b82f6, #14b8a6, #8b5cf6);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  opacity: 0.8;
+}
+
+.front {
+  transform: rotateY(0deg) translateZ(60px);
+}
+.back {
+  transform: rotateY(180deg) translateZ(60px);
+}
+.right {
+  transform: rotateY(90deg) translateZ(60px);
+}
+.left {
+  transform: rotateY(-90deg) translateZ(60px);
+}
+.top {
+  transform: rotateX(90deg) translateZ(60px);
+}
+.bottom {
+  transform: rotateX(-90deg) translateZ(60px);
+}
+
+@keyframes rotate-cube {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+
+/* Floating Background Shapes */
+.floating-shape {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
+/* Floating Icons */
+.floating-icon {
+  animation: float-gentle 4s ease-in-out infinite;
+}
+
+@keyframes float-gentle {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Glow Button */
+.glow-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.glow-button:hover {
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+  transform: translateY(-2px);
+}
+
+.glow-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.glow-button:hover::before {
+  left: 100%;
+}
+
+/* Service Cards Hover Tilt */
+.service-card {
+  transition: all 0.3s ease;
+  animation: fade-up 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.service-card:hover {
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover Tilt Effect */
+.hover-tilt {
+  transition: transform 0.3s ease;
+}
+
+.hover-tilt:hover {
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.05);
+}
+
+/* Workflow Animation */
+.workflow-node {
+  animation: fade-up 0.8s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.workflow-step:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+}
+
+.workflow-line {
+  animation: line-draw 2s ease forwards;
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+@keyframes line-draw {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Flip Cards */
+.flip-card {
+  background-color: transparent;
+  perspective: 1000px;
+  height: 200px;
+  animation: fade-up 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+/* Glowing Inputs */
+.glow-input input,
+.glow-input textarea {
+  transition: all 0.3s ease;
+}
+
+.glow-input input:focus,
+.glow-input textarea:focus {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .cube-container {
+    width: 80px;
+    height: 80px;
+  }
+
+  .cube {
+    width: 80px;
+    height: 80px;
+  }
+
+  .face {
+    width: 80px;
+    height: 80px;
+  }
+
+  .front {
+    transform: rotateY(0deg) translateZ(40px);
+  }
+  .back {
+    transform: rotateY(180deg) translateZ(40px);
+  }
+  .right {
+    transform: rotateY(90deg) translateZ(40px);
+  }
+  .left {
+    transform: rotateY(-90deg) translateZ(40px);
+  }
+  .top {
+    transform: rotateX(90deg) translateZ(40px);
+  }
+  .bottom {
+    transform: rotateX(-90deg) translateZ(40px);
+  }
+
+  .workflow-line {
+    display: none;
+  }
+}
