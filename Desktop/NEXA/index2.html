@@ -27,6 +27,10 @@
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: box-shadow 0.3s ease, background 0.3s ease;
     }
     .logo {
       font-size: 2rem;
@@ -51,6 +55,48 @@
       color: #6c757d;
     }
 
+    /* Mobile navbar toggle (hidden on desktop) */
+    .menu-toggle { 
+      display: none; 
+      background: transparent; 
+      border: 0; 
+      font-size: 1.5rem; 
+      color: #212529; 
+      cursor: pointer; 
+    }
+    .menu-toggle:focus { outline: 2px solid #adb5bd; outline-offset: 2px; }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+        z-index: 1001;
+        /* Hidden by default */
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(-10px);
+        pointer-events: none;
+        transition: visibility .2s step-end, opacity .2s ease, transform .2s ease;
+      }
+      .nav-menu.open {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+        transition: visibility 0s step-start, opacity .2s ease, transform .2s ease;
+      }
+      .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .nav-menu a { padding: 0.5rem 0; }
+    }
+
     /* Hero Section */
     .hero {
       display: flex;
@@ -68,7 +114,7 @@
       padding-left: 5%;
     }
     .hero-title {
-      font-size: 5.5rem;
+  font-size: clamp(2.4rem, 8vw, 5.5rem);
       font-weight: 900;
       color: #212529;
       line-height: 1.1;
@@ -112,6 +158,31 @@
     @keyframes float {
       0%,100% { transform: translateY(0px);}
       50% { transform: translateY(-10px);}
+    }
+
+    /* Responsive adjustments for Hero */
+    @media (max-width: 900px) {
+      .hero { 
+        flex-direction: column-reverse; 
+        min-height: auto; 
+        padding: 1.5rem 1rem; 
+        gap: 1rem; 
+      }
+      .hero-content { 
+        padding-left: 0; 
+        max-width: 700px; 
+        text-align: center; 
+      }
+      .hero-description { 
+        max-width: 700px; 
+        margin: 0.25rem auto 1.25rem; 
+        font-size: 1rem; 
+      }
+      .hero-visual { 
+        min-height: 300px; 
+        margin-top: 0.5rem; 
+      }
+      .tech-background { opacity: 0.2; }
     }
 
     /* About Section */
@@ -337,6 +408,7 @@
       object-fit: cover;
       margin-bottom: 1rem;
       border: 4px solid #f8f9fa;
+  cursor: pointer;
     }
     .team-name {
       font-size: 1.5rem;
@@ -347,14 +419,11 @@
     .team-role {
       font-size: 1rem;
       font-weight: 500;
-      color: #a4deff;
+      color: rgb(54,138,182);
       margin-bottom: 1rem;
+      text-align: left;
     }
-    .team-bio {
-      font-size: 0.95rem;
-      color: #495057;
-      line-height: 1.6;
-    }
+   
     /* Wrapper for card + outside-holding robot */
     .team-item { position: relative; display: inline-block; padding-right: 6rem; }
     .team-robot-hold {
@@ -389,6 +458,48 @@
       .team-card { padding-right: 2rem; }
       .team-robot-peek { display: none; }
     }
+
+    /* ===== Modal (Founder Info) ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1rem;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #fff;
+      color: #212529;
+      width: 100%;
+      max-width: 720px;
+      border-radius: 16px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+      padding: 1.25rem 1.5rem;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      border: 0;
+      background: transparent;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #6c757d;
+    }
+    .modal-header h3 {
+      margin: 0 2rem 0.5rem 0;
+      font-size: 1.25rem;
+      font-weight: 800; /* ensure bold title */
+    }
+    .modal-body { color: #495057; line-height: 1.6; }
+    .modal-body p { margin: 0.5rem 0; }
+    .modal-body strong { font-weight: 700; color: #212529; }
     .footer {
       position: relative;
       background: rgba(17, 17, 17, 0.9);
@@ -480,7 +591,10 @@
   <!-- Navigation -->
   <nav class="navbar">
     <div class="logo">NEXA</div>
-    <ul class="nav-menu">
+    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="primaryNav" aria-label="Toggle navigation">
+      ☰
+    </button>
+    <ul class="nav-menu" id="primaryNav">
       <li><a href="#home">HOME</a></li>
       <li><a href="#about">ABOUT</a></li>
       <li><a href="#services">SERVICES</a></li>
@@ -489,7 +603,7 @@
   </nav>
 
   <!-- Hero Section -->
-  <section class="hero">
+  <section class="hero" id="home">
     <div class="tech-background"></div>
     <div class="hero-content">
       <h1 class="hero-title">AUTOMATE<br>YOUR FUTURE</h1>
@@ -604,13 +718,13 @@
       <div class="slider-container">
         <div class="slider">
           <!-- original set -->
-          <img src="photos/background.png" alt="AI Tech">
-          <img src="photos/background2.avif" alt="Automation">
-          <img src="photos/background8.png" alt="Data Cloud">
+          <img src="photos/background4.jpg" alt="AI Tech">
+          <img src="photos/pexels-pavel-danilyuk-8438918.jpg" alt="Automation">
+          <img src="photos/background2.avif" alt="Data Cloud">
           <!-- duplicate set for seamless loop -->
-          <img src="photos/background.png" alt="AI Tech duplicate" aria-hidden="true">
-          <img src="photos/background2.avif" alt="Automation duplicate" aria-hidden="true">
-          <img src="photos/background8.png" alt="Data Cloud duplicate" aria-hidden="true">
+          <img src="photos/background4.jpg" alt="AI Tech duplicate" aria-hidden="true">
+          <img src="photos/pexels-pavel-danilyuk-8438918.jpg" alt="Automation duplicate" aria-hidden="true">
+          <img src="photos/background2.avif" alt="Data Cloud duplicate" aria-hidden="true">
         </div>
       </div>
     </div>
@@ -628,7 +742,7 @@
         <div class="team-card">
           <div class="team-item">
             <div class="team-card">
-              <div class="team-image">
+              <div class="team-image" id="founderImage" aria-haspopup="dialog" aria-controls="founderModal">
                 <img src="photos/kawthar.jpeg" alt="CEO">
               </div>
               <h3 class="team-name">Kawthar shaalan</h3>
@@ -639,6 +753,22 @@
             <img src="photos/23baf17c9bfe1087ff1b5dcfa21c6877-removebg-preview.png" alt="" aria-hidden="true" class="team-robot-hold">
     </div>
   </section>
+
+  <!-- Founder Modal -->
+  <div class="modal-overlay" id="founderModal" role="dialog" aria-modal="true" aria-labelledby="founderModalTitle" aria-hidden="true">
+    <div class="modal">
+      <button class="modal-close" id="founderModalClose" aria-label="Close">×</button>
+      <div class="modal-header">
+        <h3 id="founderModalTitle">Kawthar Shaalan — Founder & CEO</h3>
+      </div>
+      <div class="modal-body">
+        <p>Kawthar leads NEXA with a vision for AI-driven automation and digital transformation. With a strong background in web development, and AI agent systems, she focuses on creating accessible, impactful solutions that empower students, professionals, and organizations.</p>
+        <p><strong>Background:</strong> Computer Science, Web Development, AI Agents</p>
+        <p><strong>Focus:</strong> Automation and human-centered design</p>
+        <p><strong>Mission:</strong> Build intelligent tools that simplify complexity and drive meaningful change</p>
+      </div>
+    </div>
+  </div>
           <footer class="footer">
             <div class="footer-content">
                 <a href="#home" class="footer-logo">
@@ -658,9 +788,8 @@
                     <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
                     <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
                 </div>
-                <p class="copyright">© 2023 NEXA Technologies. All rights reserved.</p>
+                <p class="copyright">© 2025 NEXA Technologies. All rights reserved.</p>
             </div>
 
   <script>
@@ -685,6 +814,60 @@
         navbar.style.boxShadow='none';
       }
     });
+
+    // Mobile menu toggle
+    (function(){
+      const toggle=document.getElementById('menuToggle');
+      const menu=document.getElementById('primaryNav');
+      if(!toggle||!menu) return;
+      const nav=document.querySelector('.navbar');
+
+      function closeMenu(){
+        menu.classList.remove('open');
+        toggle.setAttribute('aria-expanded','false');
+      }
+      function openMenu(){
+        menu.classList.add('open');
+        toggle.setAttribute('aria-expanded','true');
+      }
+      toggle.addEventListener('click',()=>{
+        if(menu.classList.contains('open')) closeMenu(); else openMenu();
+      });
+      // Close when clicking a link
+      menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+      // Close on outside click
+      document.addEventListener('click',e=>{
+        if(!nav.contains(e.target)) closeMenu();
+      });
+      // Close on ESC
+      document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeMenu(); });
+    })();
+
+    // Founder modal
+    (function(){
+      const openEl=document.getElementById('founderImage');
+      const modal=document.getElementById('founderModal');
+      const closeEl=document.getElementById('founderModalClose');
+      if(!openEl||!modal||!closeEl) return;
+
+      function open(){
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden','false');
+        // move focus to close button for accessibility
+        setTimeout(()=>closeEl.focus(),0);
+        document.body.style.overflow='hidden';
+      }
+      function close(){
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden','true');
+        document.body.style.overflow='';
+        openEl.querySelector('img')?.focus?.();
+      }
+      openEl.addEventListener('click',open);
+      closeEl.addEventListener('click',close);
+      modal.addEventListener('click',e=>{ if(e.target===modal) close(); });
+      document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&modal.classList.contains('active')) close(); });
+    })();
   </script>
 </body>
 </html>
